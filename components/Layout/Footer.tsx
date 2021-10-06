@@ -1,5 +1,3 @@
-import { jsx } from '@emotion/react';
-
 export default function Footer({ main } : { main?:boolean }) {
   return (
     <footer css={{

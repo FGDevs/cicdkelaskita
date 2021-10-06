@@ -8,7 +8,6 @@ export const PriceFormatter = ( price: number ) => {
 };
 
 export const markdownParser = ( text: string ) => {
-  console.log(text);
 	const toHTML = text
 		.replace(/^### (.*$)/gim, '<h3>$1</h3>') 
 		.replace(/^## (.*$)/gim, '<h2>$1</h2>')

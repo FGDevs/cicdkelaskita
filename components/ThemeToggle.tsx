@@ -29,10 +29,6 @@ const ToggleThumb = styled.span`
   height: calc(var(--toggle-height) - var(--toggle-padding) * 2);
   border-radius: 50%;
   background: #fff;
-  transform: ${(p) => 
-    p.activeTheme === 'dark'
-      ? 'translate3d(calc(var(--toggle-width) - var(--toggle-height)), 0, 0)'
-      : 'none'};
   transition: transform 0.25s ease-in-out;
 `;
 
@@ -57,7 +53,6 @@ export default function ThemeToggler() {
       type='button'
       onClick={() => setActiveTheme(inactiveTheme)}
     >
-      <ToggleThumb activeTheme={activeTheme} />
       <span aria-hidden={true}>☀️</span>
       <span aria-hidden={true}>🌙</span>
     </ToggleButton>

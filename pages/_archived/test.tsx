@@ -1,8 +1,8 @@
-// import ThemeToggler from "../components/ToggleTheme";
+// import ThemeToggler from "~/components/ToggleTheme";
 import styled from "@emotion/styled";
 import dynamic from 'next/dynamic';
 
-const ThemeToggler = dynamic(() => import('../components/ToggleTheme'), {
+const ThemeToggler = dynamic(() => import('~/components/ThemeToggle'), {
   ssr: false,
 });
 

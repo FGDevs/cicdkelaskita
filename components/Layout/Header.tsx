@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
+import dynamic from 'next/dynamic';
 import { css } from '@emotion/react'
 import Link from 'next/link';
+
+const ThemeToggle = dynamic(() => import('~/components/ThemeToggle'),{
+  ssr : false,
+});
 
 export default function Header() {
   return (
@@ -11,6 +16,7 @@ export default function Header() {
             LOGO.
           </Logo>
         </Link>
+        <ThemeToggle />
         <AuthWrapper>
           <Link href="/login" passHref>
             <Login>Masuk</Login>

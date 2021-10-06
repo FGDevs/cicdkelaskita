@@ -1,12 +1,19 @@
-import styled from '@emotion/styled';
-import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import Layout from '../../../components/Layout';
-import { Kelas } from '../../../interfaces';
-import { markdownParser } from '../../../helpers';
+import styled from '@emotion/styled';
+import Layout from '~/components/Layout';
+import { Tabs } from '~/components';
+import { Kelas } from '~/interfaces';
+import { markdownParser } from '~/utilities';
+import {
+  GetStaticPaths,
+  GetStaticProps} from 'next';
+import { 
+  GET_KELAS_PATH,
+  GET_KELAS_PREVIEW
+} from '~/graphql/queries/queryKelas';
 
 
-export default function KelasPreview({ kelas } : { kelas : [Kelas] }) {
+export default function KelasPreview({ kelas } : { kelas : Kelas[] }) {
   const {
     title,
     short_description,
@@ -15,8 +22,10 @@ export default function KelasPreview({ kelas } : { kelas : [Kelas] }) {
     level,
     price,
     preview_path,
+    sections,
   } = kelas[0];
 
+  
   const point = 0.025 * price;
 
   return (
@@ -39,6 +48,7 @@ export default function KelasPreview({ kelas } : { kelas : [Kelas] }) {
               <h3>Deskripsi Kelas</h3>
               <Description dangerouslySetInnerHTML={{__html: markdownParser(description)}} />
             </section>
+            <Tabs sections={sections} />
           </MainLayout>
           <AsideLayout>
             <AsideCard>
@@ -94,8 +104,8 @@ export default function KelasPreview({ kelas } : { kelas : [Kelas] }) {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch('http://localhost:1337/kelas');
-  const kelass = await response.json();
+  const { data } = await client.query({ query: GET_KELAS_PATH });
+  const kelass = data.kelas;
 
   const paths = kelass.map(( kelas ) => ({
     params: { 
@@ -108,9 +118,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const response = await fetch(`http://localhost:1337/kelas?slug=${params.slug}`);
-  const kelas = await response.json();
-  
+  const { data } = await client.query({
+    query: GET_KELAS_PREVIEW,
+    variables: { slug: params.slug }
+  });
+  const kelas = data.kelas;
+
+  if(!kelas.length) {
+    return {
+      notFound: true,
+    };
+  };
+
   return {
     props: { kelas } 
   };

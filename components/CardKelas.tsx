@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from '@emotion/styled';
-import { Kelas } from '../interfaces';
-import { PriceFormatter } from '../helpers';
+import { Kelas } from '~/interfaces';
+import { PriceFormatter } from '~/utilities';
 
 export default function CardKelas({ kelas }:{ kelas : Kelas }) {
   const {
@@ -14,10 +14,6 @@ export default function CardKelas({ kelas }:{ kelas : Kelas }) {
     banner_path,
     ulasan,
   } = kelas;
-
-  let ulasan_rate = 0;
-  ulasan?.forEach((object) => ulasan_rate += object.rating);
-  ulasan_rate = ulasan_rate / ulasan.length;
 
   return (
     <Link href={`/kelas/${instructor_id.name}/${slug}`} passHref>
@@ -61,23 +57,6 @@ export default function CardKelas({ kelas }:{ kelas : Kelas }) {
   )
 }
 
-const KelasBody = styled.div`
-  padding: 0.5rem;
-`
-
-const KelasImageWrapper = styled.div`
-  position: relative;
-`
-
-const KelasImageGradient = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: var(--gradient-card-image);
-`
-
 const KelasCategory = styled.div`
   background: var(--color-topik-bg);
   font-size: 0.8rem;
@@ -109,11 +88,6 @@ const KelasPengajar = styled.p`
   margin: 0.5rem 0;
 `
 
-const KelasUlasanWrapper = styled.div`
-  display: flex;
-  align-items: center;
-`
-
 const KelasUlasanCount = styled.p`
   font-size: 0.9rem;
   text-decoration: underline;
@@ -127,10 +101,9 @@ const KelasUlasanRate = styled.div`
   background: var(--color-text-secondary);
 `
 
-const KelasHargaWrapper = styled.div`
+const KelasUlasanWrapper = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 0.5rem;
 `
 
 const KelasHarga = styled.a`
@@ -145,6 +118,29 @@ const KelasHarga = styled.a`
     background: var(--color-hover);
     color: var(--color-hover-contrast);
   }
+`
+
+const KelasHargaWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+`
+
+const KelasBody = styled.div`
+  padding: 0.5rem;
+`
+
+const KelasImageGradient = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: var(--gradient-card-image);
+`
+
+const KelasImageWrapper = styled.div`
+  position: relative;
 `
 
 const KelasWrapper = styled.div`

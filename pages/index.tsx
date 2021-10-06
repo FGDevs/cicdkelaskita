@@ -1,18 +1,17 @@
-
 import Head from 'next/head'
 import Dynamic from 'next/dynamic';
 import styled from '@emotion/styled';
+import Layout from '~/components/Layout';
 import { GetStaticProps } from 'next';
-import Layout from '../components/Layout';
-import CardKelas from '../components/CardKelas';
-import Hero from '../components/Hero';
+import { client } from '~/libraries/apollo_client';
+import { GET_KELAS_CARD } from '~/graphql/queries/queryKelas';
+import { Kelas } from '~/interfaces';
+import {
+  CardKelas,
+  Hero
+} from '~/components/';
 
-const ThemeToggler = Dynamic(() => import('../components/ToggleTheme'),{
-  ssr : false,
-});
-
-export default function Home({ kelass }) {
-  console.log(kelass)
+export default function Home({ kelass }:{ kelass: Kelas[] }) {
   return (
     <>
       <Head>
@@ -36,16 +35,14 @@ export default function Home({ kelass }) {
           </SectionContent>
         </SectionContainer>
       </Layout>
-      <ThemeToggler />
     </>
   )
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch('http://localhost:1337/kelas');
-  const kelass = await response.json();
+  const { data } = await client.query({ query: GET_KELAS_CARD });
   return {
-    props: { kelass } 
+    props: { kelass : data.kelas },
   };
 };
 

@@ -22,10 +22,6 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 
-body {
-	line-height: 1;
-}
-
 blockquote, q {
 	quotes: none;
 }
@@ -42,9 +38,8 @@ table {
 }
 
 html {
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
   font-size: calc(60% + 0.8vmin);
+  -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -54,12 +49,15 @@ html {
 }
 
 body {
+  position: relative;
   background: var(--color-bg-primary);
   color: var(--color-text-primary);
   font-family: 'Roboto', sans-serif;
   transition: background 0.25s ease-in-out;
-  
+	line-height: 1;
+  min-height: 100vw;
 }
+
 main {
   display: block;
 }

@@ -30,10 +30,39 @@ export interface Media {
   width: number,
 }
 
+export interface Materi {
+  id: string | number,
+  title: string,
+  content: string,
+  duration: string,
+  order: number,
+  state: number,
+  file: Media,
+  type: [
+    'video',
+    'text',
+    'pdf',
+    'test'
+  ],
+}
+
+export interface Section {
+  id: string | number,
+  title: string,
+  description: string,
+  order: number,
+  state: number,
+  materials: Materi[],
+  kelas_id?: Kelas,
+  rekankita_id?: Object,
+}
+
 export interface Kelas {
+  id: string | number,
   title: string,
   slug: string,
   description: string,
+  short_description: string,
   price: number,
   is_webbinar: boolean,
   rekankita_id: number,
@@ -48,18 +77,18 @@ export interface Kelas {
   banner_path?: Media,
   preview_path?: Media,
   instructor_id?: Instructor,
-  sections?: Object,
-  short_description: string,
-  ulasan?: [Ulasan],
+  sections?: Section[],
+  ulasan?: Ulasan[],
 }
 
+
 export interface Instructor {
+  id: string | number,
   avatar_path: Media,
   cover_path: Media,
   created_at: string,
   created_time?: string,
   description: string,
-  id: number | string,
   name: string,
   profit_charge: number,
   published_at: string,
@@ -72,12 +101,14 @@ export interface Instructor {
 }
 
 export interface Topic {
+  id: string | number,
   title: string,
   icon_path: Media,
   state: number,
 }
 
 export interface User {
+  id: string | number,
   username: string,
   email: string,
   provider: string,
@@ -90,6 +121,7 @@ export interface User {
 }
 
 export interface Ulasan {
+  id: string | number,
   comment: string,
   rating: number,
   state: number,
